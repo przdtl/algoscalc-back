@@ -52,10 +52,10 @@ class DataDefinition(BaseModel):
     data_type: str
     data_shape: str
     default_value: Union[int, float, str, bool,
-                         Optional[list[Union[int, float, str, bool,
-                                             Optional[list[
-                                                 Union[int, float,
-                                                       str, bool]]]]]]]
+    Optional[list[Union[int, float, str, bool,
+    Optional[list[
+        Union[int, float,
+        str, bool]]]]]]]
 
     class Config:
         smart_union = True
@@ -93,9 +93,9 @@ class Data(BaseModel):
     """
     name: str
     value: Union[int, float, str, bool,
-                 Optional[list[Union[int, float, str, bool,
-                                     Optional[list[
-                                         Union[int, float, str, bool]]]]]]]
+    Optional[list[Union[int, float, str, bool,
+    Optional[list[
+        Union[int, float, str, bool]]]]]]]
 
     class Config:
         smart_union = True
@@ -140,8 +140,8 @@ class Answer(BaseModel):
     :param errors: текст ошибки выполнения запроса;
     :type errors: str or None
     """
-    result: Optional[Any]
-    errors: Optional[str]
+    result: Optional[Any] = None
+    errors: Optional[str] = None
 
     class Config:
         @staticmethod
@@ -169,7 +169,7 @@ class AnswerAlgorithmDefinition(Answer):
     :param result: описание алгоритма;
     :type result: AlgorithmDefinition or None
     """
-    result: Optional[AlgorithmDefinition]
+    result: Optional[AlgorithmDefinition] = None
 
 
 class AnswerOutputs(Answer):
@@ -179,4 +179,4 @@ class AnswerOutputs(Answer):
     :param result: список фактических значений выходных данных алгоритма;
     :type result: Outputs or None
     """
-    result: Optional[Outputs]
+    result: Optional[Outputs] = None

@@ -9,10 +9,11 @@ class Calculations(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String(length=255), nullable=False, unique=True)
+    name = Column(String(length=255), nullable=False, unique=True)
     description = Column(Text, nullable=False, default='')
 
     parameters = relationship("Parameters", back_populates='calculation')
-    output = relationship("Outputs", back_populates='calculation')
+    outputs = relationship("Outputs", back_populates='calculation')
 
     def __str__(self):
         return self.title
@@ -48,7 +49,7 @@ class Outputs(Base):
     data_shape = Column(String(length=255), nullable=False)
     default_value = Column(Integer, nullable=False)
 
-    calculation = relationship("Calculations", back_populates='output')
+    calculation = relationship("Calculations", back_populates='outputs')
 
     def __str__(self):
         return f'{self.name}, {self.title}, {self.data_type}, {self.data_shape}, {self.default_value}'
