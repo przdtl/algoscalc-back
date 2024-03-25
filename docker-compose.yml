@@ -1,9 +1,16 @@
-version: '3.7'
+version: '3'
 
 services:
   backend_test:
     container_name: BackendTest
     restart: always
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+      redis_db:
+        condition: service_started
+    links:
+      - postgres_db
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,6 +18,32 @@ services:
       - '4445:8080'
     volumes:
       - backend_test_logs:/code/logs
+      - ./:/code
+
+  postgres_db:
+    container_name: PostgreSQLTest
+    image: postgres:15
+    ports:
+      - '5555:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=111
+      - POSTGRES_DB=algocalc_db
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis_db:
+    container_name: RedisTest
+    image: redis:6
+    ports:
+      - '6666:6379'
 
 volumes:
   backend_test_logs:
+  postgres_data:

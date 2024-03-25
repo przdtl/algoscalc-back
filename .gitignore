@@ -350,3 +350,16 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# SQLite database files
+*.db
+*.sqlite3
+*.sqlite2
+*.sqlite
+*.db3
+*.db2
+*.s3db
+*.s2db
+*.sl3
+*.sl2
+*.sdb
