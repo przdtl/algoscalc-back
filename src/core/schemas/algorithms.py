@@ -55,11 +55,11 @@ class MatrixSubOutputVariables(BaseModel):
 
 
 class QuadraticEquationOutputVariables(BaseModel):
-    result: str
+    roots: str
 
 
 class SubstringInStringOutputVariables(BaseModel):
-    result: str
+    num_count: int
 
 
 class PerfectNumbersOutputVariables(BaseModel):

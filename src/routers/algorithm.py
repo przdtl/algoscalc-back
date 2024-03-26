@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from starlette import status
+from fastapi import APIRouter, HTTPException
 
 from src import TIME_OVER_MSG
 from src.core.schemas.algorithms import (FibonacciOutputVariables, FibonacciInputVariables, MatrixSubOutputVariables,
@@ -18,7 +19,7 @@ from src.api_models import (AlgorithmTitle, Algorithms, DataDefinition,
                             AlgorithmDefinition, AnswerAlgorithmDefinition, Parameters, AnswerOutputs, Outputs, Data)
 from src.errors import ErrorMessages
 from src.models import Calculations, Parameters as ParametersModel, Outputs as OutputsModel
-from fastapi import APIRouter, HTTPException
+from src.algorithms_manager import algorithms_manager
 
 router = APIRouter()
 
@@ -99,8 +100,8 @@ async def get_specific_algorithm(algorithm_name: str):
     tags=['algorithms'],
     response_model=FibonacciOutputVariables,
 )
-async def get_fibonacci_result(algorithm_name: str, parameters: FibonacciInputVariables):
-    pass
+async def get_fibonacci_result(parameters: FibonacciInputVariables):
+    return await algorithms_manager.fibonacci_result(**parameters.__dict__)
 
 
 @router.post(
@@ -108,8 +109,8 @@ async def get_fibonacci_result(algorithm_name: str, parameters: FibonacciInputVa
     tags=['algorithms'],
     response_model=PerfectNumbersOutputVariables,
 )
-async def get_perfect_numbers_result(algorithm_name: str, parameters: PerfectNumbersInputVariables):
-    pass
+async def get_perfect_numbers_result(parameters: PerfectNumbersInputVariables):
+    return await algorithms_manager.perfect_numbers_result(**parameters.__dict__)
 
 
 @router.post(
@@ -117,8 +118,8 @@ async def get_perfect_numbers_result(algorithm_name: str, parameters: PerfectNum
     tags=['algorithms'],
     response_model=MatrixSubOutputVariables,
 )
-async def get_matrix_sub_result(algorithm_name: str, parameters: MatrixSubInputVariables):
-    pass
+async def get_matrix_sub_result(parameters: MatrixSubInputVariables):
+    return await algorithms_manager.matrix_sub_result(**parameters.__dict__)
 
 
 @router.post(
@@ -126,8 +127,8 @@ async def get_matrix_sub_result(algorithm_name: str, parameters: MatrixSubInputV
     tags=['algorithms'],
     response_model=FibonacciListOutputVariables,
 )
-async def get_fibonacci_list_result(algorithm_name: str, parameters: FibonacciListInputVariables):
-    pass
+async def get_fibonacci_list_result(parameters: FibonacciListInputVariables):
+    return await algorithms_manager.fibonacci_list_result(**parameters.__dict__)
 
 
 @router.post(
@@ -135,8 +136,8 @@ async def get_fibonacci_list_result(algorithm_name: str, parameters: FibonacciLi
     tags=['algorithms'],
     response_model=FuelConsumptionOutputVariables,
 )
-async def get_fuel_consumption_result(algorithm_name: str, parameters: FuelConsumptionInputVariables):
-    pass
+async def get_fuel_consumption_result(parameters: FuelConsumptionInputVariables):
+    return await algorithms_manager.fuel_consumption_result(**parameters.__dict__)
 
 
 @router.post(
@@ -144,8 +145,8 @@ async def get_fuel_consumption_result(algorithm_name: str, parameters: FuelConsu
     tags=['algorithms'],
     response_model=QuadraticEquationOutputVariables,
 )
-async def get_quadratic_equation_result(algorithm_name: str, parameters: QuadraticEquationInputVariables):
-    pass
+async def get_quadratic_equation_result(parameters: QuadraticEquationInputVariables):
+    return await algorithms_manager.quadratic_equation_result(**parameters.__dict__)
 
 
 @router.post(
@@ -153,18 +154,8 @@ async def get_quadratic_equation_result(algorithm_name: str, parameters: Quadrat
     tags=['algorithms'],
     response_model=SubstringInStringOutputVariables,
 )
-async def get_substring_in_a_string_result(algorithm_name: str, parameters: SubstringInStringInputVariables):
-    pass
-
-
-# @router.post(
-#     '/new/{algorithm_name}',
-#     response_model=None,
-#     tags=['new'],
-# )
-# async def get_algorithm_result(algorithm_name: str, parameters: Parameters):
-#     async with async_session_maker() as session:
-#         pass
+async def get_substring_in_a_string_result(parameters: SubstringInStringInputVariables):
+    return await algorithms_manager.substring_in_a_string_result(**parameters.__dict__)
 
 
 # --------------------------------------------------------------------------- LEGACY CODE
