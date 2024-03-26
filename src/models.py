@@ -29,12 +29,11 @@ class Parameters(Base):
     description = Column(Text, nullable=False, default='')
     data_type = Column(String(length=255), nullable=False)
     data_shape = Column(String(length=255), nullable=False)
-    default_value = Column(Integer, nullable=False)
 
     calculation = relationship("Calculations", back_populates='parameters')
 
     def __str__(self):
-        return f'{self.name}, {self.title}, {self.data_type}, {self.data_shape}, {self.default_value}'
+        return f'{self.name}, {self.title}, {self.data_type}, {self.data_shape}'
 
 
 class Outputs(Base):
@@ -47,9 +46,8 @@ class Outputs(Base):
     description = Column(Text, nullable=False, default='')
     data_type = Column(String(length=255), nullable=False)
     data_shape = Column(String(length=255), nullable=False)
-    default_value = Column(Integer, nullable=False)
 
     calculation = relationship("Calculations", back_populates='outputs')
 
     def __str__(self):
-        return f'{self.name}, {self.title}, {self.data_type}, {self.data_shape}, {self.default_value}'
+        return f'{self.name}, {self.title}, {self.data_type}, {self.data_shape}'
