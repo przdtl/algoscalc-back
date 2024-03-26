@@ -1,6 +1,11 @@
+from typing import Optional
+
+from fastapi_pagination import Page
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 from starlette import status
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
 from src import TIME_OVER_MSG
 from src.core.schemas.algorithms import (FibonacciOutputVariables, FibonacciInputVariables, MatrixSubOutputVariables,
@@ -10,7 +15,7 @@ from src.core.schemas.algorithms import (FibonacciOutputVariables, FibonacciInpu
                                          SubstringInStringOutputVariables, PerfectNumbersInputVariables,
                                          PerfectNumbersOutputVariables, FuelConsumptionInputVariables,
                                          FuelConsumptionOutputVariables)
-from src.database import async_session_maker
+from src.database import async_session_maker, get_async_session
 from src.core.schemas.calculations import (ReadCalculation, ReadAlgorithms, ReadAlgorithm, ReadOutput, ReadParameters)
 from src.config import settings
 
@@ -26,15 +31,15 @@ router = APIRouter()
 
 @router.get(
     '/new',
-    response_model=ReadAlgorithms,
+    response_model=Page[ReadCalculation],
     tags=['new'],
 )
-async def get_algorithms():
-    async with async_session_maker() as session:
-        query = select(Calculations.title, Calculations.name)
-        result = await session.execute(query)
-        result = [ReadCalculation(title=row[0], name=row[1]) for row in result.all()]
-        return ReadAlgorithms(algorithms=result)
+async def get_algorithms(db: Session = Depends(get_async_session), name: Optional[str] = None):
+    return await paginate(db,
+                          select(Calculations.title, Calculations.name).filter(
+                              Calculations.name.like(f'%{name if name else ""}%')),
+                          transformer=lambda x: [ReadCalculation(title=row[0], name=row[1]) for row in x]
+                          )
 
 
 @router.get(
