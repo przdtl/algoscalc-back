@@ -1,9 +1,14 @@
-import asyncio
-
 from sqlalchemy import select
 from starlette import status
 
 from src import TIME_OVER_MSG
+from src.core.schemas.algorithms import (FibonacciOutputVariables, FibonacciInputVariables, MatrixSubOutputVariables,
+                                         MatrixSubInputVariables, FibonacciListInputVariables,
+                                         FibonacciListOutputVariables, QuadraticEquationInputVariables,
+                                         QuadraticEquationOutputVariables, SubstringInStringInputVariables,
+                                         SubstringInStringOutputVariables, PerfectNumbersInputVariables,
+                                         PerfectNumbersOutputVariables, FuelConsumptionInputVariables,
+                                         FuelConsumptionOutputVariables)
 from src.database import async_session_maker
 from src.core.schemas.calculations import (ReadCalculation, ReadAlgorithms, ReadAlgorithm, ReadOutput, ReadParameters)
 from src.config import settings
@@ -92,56 +97,63 @@ async def get_specific_algorithm(algorithm_name: str):
 @router.post(
     '/new/fibonacci',
     tags=['algorithms'],
+    response_model=FibonacciOutputVariables,
 )
-async def get_fibonacci_result():
+async def get_fibonacci_result(algorithm_name: str, parameters: FibonacciInputVariables):
     pass
 
 
 @router.post(
     '/new/perfect_numbers',
     tags=['algorithms'],
+    response_model=PerfectNumbersOutputVariables,
 )
-async def get_perfect_numbers_result():
+async def get_perfect_numbers_result(algorithm_name: str, parameters: PerfectNumbersInputVariables):
     pass
 
 
 @router.post(
     '/new/matrix_sub',
     tags=['algorithms'],
+    response_model=MatrixSubOutputVariables,
 )
-async def get_matrix_sub_result():
+async def get_matrix_sub_result(algorithm_name: str, parameters: MatrixSubInputVariables):
     pass
 
 
 @router.post(
     '/new/fibonacci_list',
     tags=['algorithms'],
+    response_model=FibonacciListOutputVariables,
 )
-async def get_fibonacci_list_result():
+async def get_fibonacci_list_result(algorithm_name: str, parameters: FibonacciListInputVariables):
     pass
 
 
 @router.post(
     '/new/fuel_consumption',
     tags=['algorithms'],
+    response_model=FuelConsumptionOutputVariables,
 )
-async def get_fuel_consumption_result():
+async def get_fuel_consumption_result(algorithm_name: str, parameters: FuelConsumptionInputVariables):
     pass
 
 
 @router.post(
     '/new/quadratic_equation',
     tags=['algorithms'],
+    response_model=QuadraticEquationOutputVariables,
 )
-async def get_quadratic_equation_result():
+async def get_quadratic_equation_result(algorithm_name: str, parameters: QuadraticEquationInputVariables):
     pass
 
 
 @router.post(
     '/new/substring_in_a_string',
     tags=['algorithms'],
+    response_model=SubstringInStringOutputVariables,
 )
-async def get_substring_in_a_string_result():
+async def get_substring_in_a_string_result(algorithm_name: str, parameters: SubstringInStringInputVariables):
     pass
 
 
