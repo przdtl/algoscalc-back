@@ -30,7 +30,6 @@ admin.add_view(OutputAdmin)
 app.include_router(
     algorithm_router,
     prefix=ALGORITHMS_ENDPOINT,
-    tags=['algooscalc'],
 )
 
 add_pagination(app)

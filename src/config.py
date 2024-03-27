@@ -5,7 +5,6 @@ import logging.config
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from src import LOG_CONFIG_FILE_PATH, APP_CONFIG_FILE_PATH, PATH_CONFIG, ALGORITHM_CONFIG, IS_TEST_APP, EXECUTE_TIMEOUT
-from src.core.algorithm_collection import AlgorithmCollection
 
 
 class Settings(BaseSettings):
@@ -19,7 +18,6 @@ class Settings(BaseSettings):
         super().__init__()
         self.__logger_init()
         self.__init_config()
-        # self.__init_algorithm_collection()
 
     @property
     def database_url_asyncpg(self):
@@ -56,9 +54,6 @@ class Settings(BaseSettings):
         self.__algorithm_config = algorithm_config
         self.__web_config = config['web_config']
 
-    def __init_algorithm_collection(self):
-        self.__algorithms = AlgorithmCollection(self.__path_config, self.__algorithm_config, self.__logger_config)
-
     @property
     def logger(self):
         return self.__logger
@@ -74,10 +69,6 @@ class Settings(BaseSettings):
     @property
     def web_config(self):
         return self.__web_config
-
-    @property
-    def algorithms(self):
-        return self.__algorithms
 
     @property
     def redis_url(self):

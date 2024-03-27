@@ -2,12 +2,12 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from starlette import status
 
-from src.core.schemas.algorithms import (FibonacciOutputVariables, MatrixSubOutputVariables,
-                                         FibonacciListOutputVariables,
-                                         QuadraticEquationOutputVariables,
-                                         SubstringInStringOutputVariables,
-                                         PerfectNumbersOutputVariables,
-                                         FuelConsumptionOutputVariables, SimplexMethodOutputVariables)
+from src.schemas.algorithms import (FibonacciOutputVariables, MatrixSubOutputVariables,
+                                    FibonacciListOutputVariables,
+                                    QuadraticEquationOutputVariables,
+                                    SubstringInStringOutputVariables,
+                                    PerfectNumbersOutputVariables,
+                                    FuelConsumptionOutputVariables, SimplexMethodOutputVariables)
 
 from src.algorithms.fibonacci.function import fibonacci
 from src.algorithms.fibonacci_list.function import fibonacci as fibonacci_list
