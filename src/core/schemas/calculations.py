@@ -14,7 +14,6 @@ class ReadParameters(BaseModel):
     name: str
     data_type: str
     data_shape: str
-    default_value: int
 
 
 class ReadOutput(BaseModel):
@@ -23,7 +22,6 @@ class ReadOutput(BaseModel):
     name: str
     data_type: str
     data_shape: str
-    default_value: int
 
 
 class ReadAlgorithm(ReadCalculation):
