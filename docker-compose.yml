@@ -11,6 +11,8 @@ services:
         condition: service_started
     links:
       - postgres_db
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,6 +29,7 @@ services:
       - '5555:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./init.sql:/init.sql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=111
