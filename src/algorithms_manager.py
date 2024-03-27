@@ -7,7 +7,7 @@ from src.core.schemas.algorithms import (FibonacciOutputVariables, MatrixSubOutp
                                          QuadraticEquationOutputVariables,
                                          SubstringInStringOutputVariables,
                                          PerfectNumbersOutputVariables,
-                                         FuelConsumptionOutputVariables)
+                                         FuelConsumptionOutputVariables, SimplexMethodOutputVariables)
 
 from src.algorithms.fibonacci.function import fibonacci
 from src.algorithms.fibonacci_list.function import fibonacci as fibonacci_list
@@ -16,6 +16,8 @@ from src.algorithms.matrix_sub.function import main as matrix_sub
 from src.algorithms.perfect_numbers.function import main as perfect_numbers
 from src.algorithms.quadratic_equation.function import main as quadratic_equation
 from src.algorithms.substring_in_a_string.function import main as substring_in_a_string
+from src.algorithms.simplex_method.function import main as simplex_method
+
 from src.database import async_session_maker
 from src.errors import ErrorMessages
 from src.models import Calculations
@@ -131,6 +133,33 @@ class AlgorithmsManager:
         result = substring_in_a_string(text, findtext)
         result = SubstringInStringOutputVariables(**result)
         return result
+
+    @classmethod
+    async def simplex_method_result(cls, **parameters) -> SimplexMethodOutputVariables:
+        await cls.__is_algorithm_exist('simplex_method')
+        tableau = parameters.get('tableau')
+        basic_var = parameters.get('basic_var')
+        try:
+            result = simplex_method(tableau, basic_var)
+            result = SimplexMethodOutputVariables(**result)
+            return result
+        except ValueError as e:
+            exception_message = str(e)
+            if exception_message == 'Эта таблица бесконечна':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ErrorMessages.THIS_TABLE_IS_ENDLESS,
+                )
+            if exception_message == 'Решения нет':
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=ErrorMessages.THERE_IS_NO_SOLUTION,
+                )
+        except IndexError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=ErrorMessages.INCORRECT_INPUT_DATA,
+            )
 
     @classmethod
     async def __is_algorithm_exist(cls, name):

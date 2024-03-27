@@ -8,10 +8,6 @@ class ReadCalculation(BaseModel):
     title: str
 
 
-class ReadAlgorithms(BaseModel):
-    algorithms: list[ReadCalculation]
-
-
 class ReadParameters(BaseModel):
     title: str
     description: str

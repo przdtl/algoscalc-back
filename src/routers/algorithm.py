@@ -14,9 +14,10 @@ from src.core.schemas.algorithms import (FibonacciOutputVariables, FibonacciInpu
                                          QuadraticEquationOutputVariables, SubstringInStringInputVariables,
                                          SubstringInStringOutputVariables, PerfectNumbersInputVariables,
                                          PerfectNumbersOutputVariables, FuelConsumptionInputVariables,
-                                         FuelConsumptionOutputVariables)
+                                         FuelConsumptionOutputVariables, SimplexMethodOutputVariables,
+                                         SimplexMethodInputVariables)
 from src.database import async_session_maker, get_async_session
-from src.core.schemas.calculations import (ReadCalculation, ReadAlgorithms, ReadAlgorithm, ReadOutput, ReadParameters)
+from src.core.schemas.calculations import (ReadCalculation, ReadAlgorithm, ReadOutput, ReadParameters)
 from src.config import settings
 
 from src.core.algorithm_collection import ALGORITHM_NOT_EXISTS_TEMPL
@@ -161,6 +162,15 @@ async def get_quadratic_equation_result(parameters: QuadraticEquationInputVariab
 )
 async def get_substring_in_a_string_result(parameters: SubstringInStringInputVariables):
     return await algorithms_manager.substring_in_a_string_result(**parameters.__dict__)
+
+
+@router.post(
+    '/new/simplex_method',
+    tags=['algorithms'],
+    response_model=SimplexMethodOutputVariables,
+)
+async def get_substring_in_a_string_result(parameters: SimplexMethodInputVariables):
+    return await algorithms_manager.simplex_method_result(**parameters.__dict__)
 
 
 # --------------------------------------------------------------------------- LEGACY CODE

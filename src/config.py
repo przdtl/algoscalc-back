@@ -19,7 +19,7 @@ class Settings(BaseSettings):
         super().__init__()
         self.__logger_init()
         self.__init_config()
-        self.__init_algorithm_collection()
+        # self.__init_algorithm_collection()
 
     @property
     def database_url_asyncpg(self):

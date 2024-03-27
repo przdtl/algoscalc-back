@@ -39,6 +39,11 @@ class FuelConsumptionInputVariables(BaseModel):
     need_round: bool
 
 
+class SimplexMethodInputVariables(BaseModel):
+    tableau: list[list[float]]
+    basic_var: list[int]
+
+
 # OUTPUT SCHEMAS
 
 
@@ -70,3 +75,8 @@ class PerfectNumbersOutputVariables(BaseModel):
 class FuelConsumptionOutputVariables(BaseModel):
     volume: float
     cost: float
+
+
+class SimplexMethodOutputVariables(BaseModel):
+    optimal_solution: list[float]
+    optimal_value: float
