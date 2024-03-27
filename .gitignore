@@ -343,7 +343,6 @@ ASALocalRun/
 healthchecksdb
 
 # Environments
-.env*
 .venv
 env/
 venv/
